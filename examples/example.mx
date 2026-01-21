@@ -1,0 +1,83 @@
+"""
+Example Matrix Program
+
+This demonstrates the matrix operations supported by the Matrix language compiler.
+"""
+
+def matrix_computation(A, B):
+    """
+    Perform a series of matrix operations.
+    
+    This function demonstrates:
+    - Matrix multiplication (A @ B)
+    - Transpose (A.T)
+    - Element-wise addition (A + B)
+    - Double transpose optimization (A.T.T -> A)
+    
+    Args:
+        A: First input matrix (3x3)
+        B: Second input matrix (3x3)
+    
+    Returns:
+        Result matrix after operations
+    """
+    # Matrix multiplication
+    C = A @ B
+    
+    # Double transpose (should be optimized to just C)
+    D = C.T.T
+    
+    # Another chain: transpose B, then transpose back
+    E = B.T
+    F = E.T  # F should equal B after optimization
+    
+    # Add the results
+    G = D + F
+    
+    # Final double transpose (should be optimized away)
+    result = G.T.T
+    
+    return result
+
+
+def simple_matmul(X, Y):
+    """Simple matrix multiplication example."""
+    return X @ Y
+
+
+def transpose_chain(M):
+    """Demonstrate transpose operations."""
+    # This chain should be optimized
+    T1 = M.T      # Transpose
+    T2 = T1.T     # Double transpose -> M
+    T3 = T2.T     # Triple transpose -> M.T
+    return T3
+
+
+def scalar_operations(M):
+    """Demonstrate scalar multiplication."""
+    # Scale matrix by 2.0
+    scaled = M * 2.0
+    
+    # Scale again by 0.5 (should give original)
+    result = scaled * 0.5
+    
+    return result
+
+
+def main():
+    """Main function to test matrix computation."""
+    # Define two 3x3 matrices
+    A = matrix([[1.0, 2.0, 3.0],
+                [4.0, 5.0, 6.0],
+                [7.0, 8.0, 9.0]])
+    
+    B = matrix([[9.0, 8.0, 7.0],
+                [6.0, 5.0, 4.0],
+                [3.0, 2.0, 1.0]])
+    
+    # Run the computation
+    result = matrix_computation(A, B)
+    
+    # Print result (for debugging)
+    print(result)

@@ -1,0 +1,16 @@
+compiler.py
+pyproject.toml
+./compiler.py
+devdocs/plan.md
+matrix_lang.egg-info/PKG-INFO
+matrix_lang.egg-info/SOURCES.txt
+matrix_lang.egg-info/dependency_links.txt
+matrix_lang.egg-info/entry_points.txt
+matrix_lang.egg-info/requires.txt
+matrix_lang.egg-info/top_level.txt
+src/__init__.py
+src/dialect.py
+src/ir_generator.py
+src/middle_end.py
+src/parser.py
+src/standard_lowering.py

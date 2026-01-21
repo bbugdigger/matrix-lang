@@ -1,0 +1,154 @@
+Metadata-Version: 2.4
+Name: matrix-lang
+Version: 0.1.0
+Summary: A matrix operations compiler using xDSL framework
+Author: Matrix Lang Team
+License: MIT
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: xdsl>=0.14.0
+
+# Matrix Language Compiler - Project Plan
+
+## Project Overview
+
+This project implements a complete compiler for a matrix-oriented domain-specific language (DSL) using the xDSL framework. The compiler demonstrates the full compilation pipeline from high-level matrix operations to native machine code via LLVM.
+
+## Goals
+
+### Primary Goals
+1. **Custom IR Definition**: Define a custom Matrix dialect using xDSL's IRDL (IR Definition Language) with proper type definitions and operation verifiers
+2. **Parser Implementation**: Parse a Python-like matrix language syntax into an AST
+3. **IR Generation**: Generate custom Matrix IR from the parsed AST
+4. **Optimization Passes**: Implement middle-end optimizations (e.g., double transpose elimination, dead code elimination)
+5. **Lowering to Standard MLIR**: Lower custom Matrix IR to standard MLIR dialects (memref, scf, arith, func)
+6. **LLVM Code Generation**: Use MLIR tools to convert to LLVM IR and compile to native executable
+
+### Secondary Goals
+1. Write comprehensive verifiers for all operations
+2. Support matrix operations: add, multiply, transpose, scalar multiplication
+3. Demonstrate optimization effectiveness
+4. Produce working executables
+
+## Technology Stack
+
+- **xDSL**: Python framework for building MLIR-based compilers
+- **LLVM/MLIR**: Backend compilation infrastructure (mlir-opt, mlir-translate, llc, clang)
+- **Python 3.10+**: Implementation language
+
+## Implementation Plan
+
+### Phase 1: Foundation (dialect.py, parser.py)
+1. Define MatrixType attribute with rows, cols, dtype parameters
+2. Define operations: AllocOp, AddOp, MatMulOp, TransposeOp, ScalarMulOp
+3. Implement verifiers for dimension compatibility
+4. Implement Python AST-based parser for matrix operations
+
+### Phase 2: IR Generation (ir_generator.py)
+1. Convert parsed AST to Matrix dialect operations
+2. Handle function definitions and calls
+3. Manage variable mapping (SSA values)
+
+### Phase 3: Optimization (middle_end.py)
+1. Implement DoubleTransposeElimination pass
+2. Implement DeadCodeElimination pass
+3. Create optimization pipeline
+
+### Phase 4: Lowering (standard_lowering.py)
+1. Convert MatrixType to MemRefType
+2. Lower matrix operations to nested loops with memref/arith operations
+3. Handle function signature updates
+4. Clean up conversion casts
+
+### Phase 5: Integration (compiler.py, compile_full.sh)
+1. Create main compiler driver with CLI interface
+2. Create shell script for full compilation pipeline
+3. Test end-to-end compilation
+
+## Compilation Pipeline
+
+```
+Source Code (.mx)
+    │
+    ▼
+┌─────────────┐
+│   Parser    │  Python AST → Operation Info
+└─────────────┘
+    │
+    ▼
+┌─────────────┐
+│ IR Generator│  Operation Info → Matrix IR
+└─────────────┘
+    │
+    ▼
+┌─────────────┐
+│ Optimizer   │  Double Transpose Elimination, DCE
+└─────────────┘
+    │
+    ▼
+┌─────────────┐
+│  Lowering   │  Matrix IR → memref/scf/arith
+└─────────────┘
+    │
+    ▼
+┌─────────────┐
+│  mlir-opt   │  Standard MLIR → LLVM Dialect
+└─────────────┘
+    │
+    ▼
+┌─────────────────┐
+│ mlir-translate  │  LLVM Dialect → LLVM IR
+└─────────────────┘
+    │
+    ▼
+┌─────────────┐
+│    llc      │  LLVM IR → Assembly
+└─────────────┘
+    │
+    ▼
+┌─────────────┐
+│   clang     │  Assembly → Executable
+└─────────────┘
+```
+
+## Matrix Language Syntax
+
+The language uses Python-like syntax for matrix operations:
+
+```python
+def matrix_computation(A, B):
+    # Matrix multiplication
+    C = A @ B
+    
+    # Transpose
+    D = C.T
+    
+    # Element-wise addition
+    E = C + D
+    
+    # Scalar multiplication
+    F = E * 2.0
+    
+    return F
+
+def main():
+    A = matrix([[1, 2], [3, 4]])
+    B = matrix([[5, 6], [7, 8]])
+    result = matrix_computation(A, B)
+```
+
+## Success Criteria
+
+1. Successfully parse matrix programs
+2. Generate valid Matrix IR with proper types
+3. Verifiers catch dimension mismatches
+4. Optimizations reduce redundant operations
+5. Lowering produces valid standard MLIR
+6. Full pipeline produces working LLVM IR
+7. (Stretch) Produce working native executables
+
+## References
+
+- xDSL Documentation: https://xdsl.dev
+- MLIR Documentation: https://mlir.llvm.org
+- Reference project: matrix-toy-lang (in parent directory)

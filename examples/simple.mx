@@ -1,0 +1,5 @@
+def test_add(A, B):
+    return A + B
+
+def main():
+    pass

@@ -1,0 +1,5 @@
+def test_matmul(A, B):
+    return A @ B
+
+def main():
+    pass

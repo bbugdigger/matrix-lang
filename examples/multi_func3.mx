@@ -1,0 +1,28 @@
+def matrix_computation(A, B):
+    C = A @ B
+    G = C + B
+    return G
+
+def simple_matmul(X, Y):
+    return X @ Y
+
+def transpose_chain(M):
+    T1 = M.T
+    T2 = T1.T
+    T3 = T2.T
+    return T3
+
+def scalar_operations(M):
+    scaled = M * 2.0
+    result = scaled * 0.5
+    return result
+
+def main():
+    A = matrix([[1.0, 2.0, 3.0],
+                [4.0, 5.0, 6.0],
+                [7.0, 8.0, 9.0]])
+    B = matrix([[9.0, 8.0, 7.0],
+                [6.0, 5.0, 4.0],
+                [3.0, 2.0, 1.0]])
+    result = matrix_computation(A, B)
+    print(result)

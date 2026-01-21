@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "matrix-lang"
+version = "0.1.0"
+description = "A matrix operations compiler using xDSL framework"
+readme = "devdocs/plan.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Matrix Lang Team"}
+]
+dependencies = [
+    "xdsl>=0.14.0",
+]
+
+[project.scripts]
+matrixc = "matrix_lang.compiler:main"
+
+[tool.setuptools]
+packages = ["matrix_lang", "matrix_lang.src"]
+
+[tool.setuptools.package-dir]
+"matrix_lang" = "."
+"matrix_lang.src" = "src"

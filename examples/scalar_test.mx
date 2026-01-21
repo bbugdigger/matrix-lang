@@ -1,0 +1,5 @@
+def test_scalar(A):
+    return A * 2.0
+
+def main():
+    pass

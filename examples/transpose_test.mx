@@ -1,0 +1,6 @@
+def test_transpose(A):
+    T = A.T
+    return T
+
+def main():
+    pass
