@@ -1,1 +1,5 @@
 devdocs/
+out/
+out/IR/mlir/
+out/IR/llvm/
+src/__pycache__/
