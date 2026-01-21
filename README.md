@@ -164,7 +164,3 @@ func.func @matmul(%A: memref<3x3xf32>, %B: memref<3x3xf32>) -> memref<3x3xf32> {
   return %result : memref<3x3xf32>
 }
 ```
-
-## License
-
-MIT
