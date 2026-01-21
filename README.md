@@ -34,7 +34,7 @@ A compiler for a matrix-oriented domain-specific language (DSL) built using the 
            │
            ▼
   ┌─────────────────┐
-  │   LLVM Tools    │  mlir-opt → mlir-translate → llc → clang
+  │   LLVM Tools    │  mlir-opt → mlir-translate → llc
   └────────┬────────┘
            │
            ▼
